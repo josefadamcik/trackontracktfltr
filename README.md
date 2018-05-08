@@ -1,8 +1,8 @@
-# trackontraktfltr
+# TrackOnTrakt^Fltr
 
-TrackOnTrakt in flutter, jaj!
+Rework of [TrackOnTrakt](https://github.com/josefadamcik/TrackOnTrakt) in Flutter. 
 
-## Getting Started
+Experimental playground, I am not going to reimplement whole project. I just want to try and learn flutter.   
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+
+
