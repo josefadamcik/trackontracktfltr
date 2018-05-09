@@ -90,11 +90,25 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_oauth:
+    dependency: "direct main"
+    description:
+      name: flutter_oauth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_webview_plugin:
+    dependency: transitive
+    description:
+      name: flutter_webview_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.9+1"
   front_end:
     dependency: transitive
     description:
