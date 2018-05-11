@@ -7,14 +7,14 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _LoginPageState createState() {
-    return new _LoginPageState();
+  _LoginScreenState createState() {
+    return new _LoginScreenState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _authorizationEndpoint =
       Uri.parse("https://api.trakt.tv/oauth/authorize");
   final _tokenEndpoint = Uri.parse("https://api.trakt.tv/oauth/token");

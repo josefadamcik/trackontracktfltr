@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:trackontraktfltr/login_page.dart';
-import 'package:trackontraktfltr/welcome_page.dart';
 import 'package:flutter/painting.dart' show Color;
+import 'package:trackontraktfltr/screens/history_screen.dart';
+import 'package:trackontraktfltr/screens/login_screen.dart';
+import 'package:trackontraktfltr/screens/welcome_screen.dart';
 
 void main() => runApp(new MyApp());
-
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -20,9 +19,10 @@ class MyApp extends StatelessWidget {
         primaryColorLight: new Color(0xFF63a4ff),
         primaryColorDark: new Color(0xFF004ba0),
       ),
-      home: new WelcomePage(),
+      home: new WelcomeScreen(),
       routes: <String, WidgetBuilder> {
-        '/login': (BuildContext context) => new LoginPage(),
+        '/login': (BuildContext context) => new LoginScreen(),
+        '/history': (BuildContext context) => new HistoryScreen(),
       },
     );
   }
