@@ -7,6 +7,8 @@ Rework of [TrackOnTrakt](https://github.com/josefadamcik/TrackOnTrakt) in Flutte
 Experimental playground, I am not going to reimplement whole project. I just want to try and learn flutter.
 
    
+# Building
 
+Copy assets/trakt_keys.json.example to assets/trakt_keys.json and fill in your appid and secret.
 
 

@@ -1,6 +1,6 @@
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -36,6 +36,20 @@ class _MyWelcomePageState extends State<WelcomePage> {
     });
   }
 
+  _onLoginButtonPressed() async {
+    Navigator.of(context).pushNamed('/login');
+  }
+
+  _launchTraktWebsite() async {
+    const url = 'https://trakt.tv/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -70,8 +84,7 @@ class _MyWelcomePageState extends State<WelcomePage> {
                     child: new MaterialButton(
                         color: theme.accentColor,
                         textColor: Colors.white,
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/login'),
+                        onPressed: () => _onLoginButtonPressed(),
                         child: new Text("Login via trakt.tv"))))
           ])
         ],
@@ -94,7 +107,7 @@ class _MyWelcomePageState extends State<WelcomePage> {
                   new TextSpan(text: 'trakt.tv',
                       style: underlinedStyle,
                       recognizer: new TapGestureRecognizer()
-                        ..onTap = () { _launchURL(); }
+                        ..onTap = () { _launchTraktWebsite(); }
                   ),
                   new TextSpan(
                       style: defaultTextStyle,
@@ -107,11 +120,7 @@ class _MyWelcomePageState extends State<WelcomePage> {
 }
 
 
-_launchURL() async {
-  const url = 'https://trakt.tv/';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
+
+
+
+

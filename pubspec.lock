@@ -90,25 +90,18 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_oauth:
-    dependency: "direct main"
-    description:
-      name: flutter_oauth
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
   flutter_webview_plugin:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_webview_plugin
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9+1"
+    version: "0.1.5"
   front_end:
     dependency: transitive
     description:
@@ -221,6 +214,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
+  oauth2:
+    dependency: "direct main"
+    description:
+      name: oauth2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   package_config:
     dependency: transitive
     description:
@@ -270,6 +270,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.29.0+1"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
   shelf:
     dependency: transitive
     description:

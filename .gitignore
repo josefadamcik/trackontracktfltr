@@ -10,3 +10,4 @@ build/
 .idea
 *.iml
 keys.properties
+assets/trakt_keys.json
