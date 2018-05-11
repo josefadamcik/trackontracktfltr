@@ -3,8 +3,9 @@ import 'package:flutter/painting.dart' show Color;
 import 'package:trackontraktfltr/screens/history_screen.dart';
 import 'package:trackontraktfltr/screens/login_screen.dart';
 import 'package:trackontraktfltr/screens/welcome_screen.dart';
+import 'package:trackontraktfltr/state_container.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new StateContainer(child: new MyApp()));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
