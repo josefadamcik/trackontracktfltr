@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-class AuthState {
+class Authorization {
   final _authorizationEndpoint =
   Uri.parse("https://api.trakt.tv/oauth/authorize");
   final _tokenEndpoint = Uri.parse("https://api.trakt.tv/oauth/token");
@@ -18,7 +18,6 @@ class AuthState {
   String _secret;
   oauth2.Client _client;
   var _grant;
-
 
   Future<bool> isAuthorized() async {
     await getOauthClient();
@@ -33,12 +32,11 @@ class AuthState {
     _provideAuthorizationCodeGrant().getAuthorizationUrl(_redirectUrl).toString();
   }
 
+
   /// Either load an OAuth2 client from saved credentials or authenticate a new
   /// one.
   Future<oauth2.Client> getOauthClient() async {
-    if (_client != null) {
-      return _client;
-    } else {
+    if (_client == null) {
       var keys = await _loadKeys();
       _identifier = keys['clientid'];
       _secret = keys['clientsecret'];
@@ -46,12 +44,11 @@ class AuthState {
       var credentialsJson = prefs.getString(_oauthCredentialsPreferencesKey);
       if (credentialsJson != null) {
         var credentials = new oauth2.Credentials.fromJson(credentialsJson);
-        return new oauth2.Client(credentials,
+        _client = new oauth2.Client(credentials,
             identifier: _identifier, secret: _secret);
-      } else {
-        return null;
       }
     }
+    return _client;
   }
 
   Future<oauth2.Client> finishOauth2Authorization(Uri redirected) async {
@@ -70,6 +67,7 @@ class AuthState {
     }
     return _grant;
   }
+
 
   Future<Map<String, dynamic>> _loadKeys() async {
     var keysString =  await rootBundle.loadString('assets/trakt_keys.json');

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:trackontraktfltr/models/auth_state.dart';
 
 ///
 /// See http://ericwindmill.com/using-flutter-inherited-widgets-effectively/
@@ -9,11 +8,9 @@ import 'package:trackontraktfltr/models/auth_state.dart';
 class StateContainer extends StatefulWidget {
   // You must pass through a child.
   final Widget child;
-  final AuthState authState;
 
   StateContainer({
     @required this.child,
-    this.authState,
   });
 
   // This is the secret sauce. Write your own 'of' method that will behave
@@ -28,28 +25,7 @@ class StateContainer extends StatefulWidget {
   StateContainerState createState() => new StateContainerState();
 }
 class StateContainerState extends State<StateContainer> {
-  // Whichever properties you wanna pass around your app as state
-  AuthState authState;
 
-//  // You can (and probably will) have methods on your StateContainer
-//  // These methods are then used through our your app to
-//  // change state.
-//  // Using setState() here tells Flutter to repaint all the
-//  // Widgets in the app that rely on the state you've changed.
-//  void updateUserInfo({firstName, lastName, email}) {
-//    if (user == null) {
-//      user = new User(firstName, lastName, email);
-//      setState(() {
-//        user = user;
-//      });
-//    } else {
-//      setState(() {
-//        user.firstName = firstName ?? user.firstName;
-//        user.lastName = lastName ?? user.lastName;
-//        user.email = email ?? user.email;
-//      });
-//    }
-//  }
 
   // Simple build method that just passes this state through
   // your InheritedWidget

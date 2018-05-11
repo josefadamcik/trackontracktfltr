@@ -1,12 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trackontraktfltr/models/auth_state.dart';
-import 'package:trackontraktfltr/state_container.dart';
+import 'package:trackontraktfltr/Authorization.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -18,8 +12,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _webViewPlugin = new FlutterWebviewPlugin();
+  final Authorization _authorization = new Authorization();
   bool _loading = true;
-  AuthState _authState;
 
 
 
@@ -27,13 +21,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _authState = StateContainer.of(context).authState;
     _webViewPlugin.onStateChanged.listen((WebViewStateChanged event) {
       print(event.toString());
     });
     _webViewPlugin.onUrlChanged.listen((String url) {
       print("webview url changed $url");
-      if (_authState.isRedirectUrl(url)) {
+      if (_authorization.isRedirectUrl(url)) {
         _webViewPlugin.close();
         _finishOauth(Uri.parse(url));
       }
@@ -54,16 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
-
-
   void _initOauth() async {
-    if (await _authState.isAuthorized()) {
+    if (await _authorization.isAuthorized()) {
+      print("Alerady authorized");
       //we already have login!
       setState(() {
         _loading = false;
       });
     } else {
-      _webViewPlugin.launch(_authState.getAuthorizationUrl(),
+      print("Start webview");
+      _webViewPlugin.launch(_authorization.getAuthorizationUrl(),
           withJavascript: true, withLocalStorage: true);
     }
   }
@@ -71,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _finishOauth(Uri redirected) async {
     print("finish oauth");
-    await _authState.finishOauth2Authorization(redirected);
+    await _authorization.finishOauth2Authorization(redirected);
     //we are done.
     setState(() {
       _loading = false;
