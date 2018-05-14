@@ -27,7 +27,7 @@ class Authorization {
   }
 
   String getAuthorizationUrl() {
-    _provideAuthorizationCodeGrant()
+    return _provideAuthorizationCodeGrant()
         .getAuthorizationUrl(_redirectUrl)
         .toString();
   }

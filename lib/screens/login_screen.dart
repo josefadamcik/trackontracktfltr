@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _webViewPlugin.onStateChanged.listen((WebViewStateChanged event) {
-      print(event.toString());
+      print("webview ${event.toString()}");
     });
     _webViewPlugin.onUrlChanged.listen((String url) {
       print("webview url changed $url");
@@ -55,8 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _loading = false;
       });
     } else {
-      print("Start webview");
-      _webViewPlugin.launch(_authorization.getAuthorizationUrl(),
+      var url = _authorization.getAuthorizationUrl();
+      print("Start webview for $url");
+      _webViewPlugin.launch(url,
           withJavascript: true, withLocalStorage: true);
     }
   }
