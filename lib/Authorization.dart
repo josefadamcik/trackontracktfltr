@@ -5,11 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class Authorization {
   final _authorizationEndpoint =
-  Uri.parse("https://api.trakt.tv/oauth/authorize");
+      Uri.parse("https://api.trakt.tv/oauth/authorize");
   final _tokenEndpoint = Uri.parse("https://api.trakt.tv/oauth/token");
   final _oauthCredentialsPreferencesKey = "oauthcred";
   final _redirectUrl = Uri.parse("tot://authorized");
@@ -29,9 +27,10 @@ class Authorization {
   }
 
   String getAuthorizationUrl() {
-    _provideAuthorizationCodeGrant().getAuthorizationUrl(_redirectUrl).toString();
+    _provideAuthorizationCodeGrant()
+        .getAuthorizationUrl(_redirectUrl)
+        .toString();
   }
-
 
   /// Either load an OAuth2 client from saved credentials or authenticate a new
   /// one.
@@ -43,8 +42,8 @@ class Authorization {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var credentialsJson = prefs.getString(_oauthCredentialsPreferencesKey);
       if (credentialsJson != null) {
-        var credentials = new oauth2.Credentials.fromJson(credentialsJson);
-        _client = new oauth2.Client(credentials,
+        var credentials = oauth2.Credentials.fromJson(credentialsJson);
+        _client = oauth2.Client(credentials,
             identifier: _identifier, secret: _secret);
       }
     }
@@ -52,7 +51,8 @@ class Authorization {
   }
 
   Future<oauth2.Client> finishOauth2Authorization(Uri redirected) async {
-    _client = await _grant.handleAuthorizationResponse(redirected.queryParameters);
+    _client =
+        await _grant.handleAuthorizationResponse(redirected.queryParameters);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
         _oauthCredentialsPreferencesKey, _client.credentials.toJson());
@@ -61,17 +61,15 @@ class Authorization {
 
   oauth2.AuthorizationCodeGrant _provideAuthorizationCodeGrant() {
     if (_grant == null) {
-      _grant = new oauth2.AuthorizationCodeGrant(
+      _grant = oauth2.AuthorizationCodeGrant(
           _identifier, _authorizationEndpoint, _tokenEndpoint,
           secret: _secret);
     }
     return _grant;
   }
 
-
   Future<Map<String, dynamic>> _loadKeys() async {
-    var keysString =  await rootBundle.loadString('assets/trakt_keys.json');
+    var keysString = await rootBundle.loadString('assets/trakt_keys.json');
     return json.decode(keysString);
   }
-
 }

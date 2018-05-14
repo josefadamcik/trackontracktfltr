@@ -6,13 +6,13 @@ import 'package:trackontraktfltr/Authorization.dart';
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() {
-    return new _LoginScreenState();
+    return  _LoginScreenState();
   }
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _webViewPlugin = new FlutterWebviewPlugin();
-  final Authorization _authorization = new Authorization();
+  final _webViewPlugin = FlutterWebviewPlugin();
+  final Authorization _authorization = Authorization();
   bool _loading = true;
 
 
@@ -37,11 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Login on Trakt.tv"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Login on Trakt.tv"),
       ),
-      body: new Center(
+      body: Center(
           child: _loading ? CircularProgressIndicator() : Text("Logged in")),
     );
   }

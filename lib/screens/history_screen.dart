@@ -4,16 +4,16 @@ class HistoryScreen extends StatefulWidget {
   HistoryScreen({Key key}) : super(key: key);
 
   @override
-  _HistoryScreenState createState() => new _HistoryScreenState();
+  _HistoryScreenState createState() => _HistoryScreenState();
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text("TrackOnTrakt"),),
-      body: new ListView(),
+    return Scaffold(
+      appBar: AppBar(title: Text("TrackOnTrakt"),),
+      body: ListView(),
     );
   }
 

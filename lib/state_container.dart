@@ -22,7 +22,7 @@ class StateContainer extends StatefulWidget {
   }
 
   @override
-  StateContainerState createState() => new StateContainerState();
+  StateContainerState createState() => StateContainerState();
 }
 class StateContainerState extends State<StateContainer> {
 
@@ -31,7 +31,7 @@ class StateContainerState extends State<StateContainer> {
   // your InheritedWidget
   @override
   Widget build(BuildContext context) {
-    return new _InheritedStateContainer(
+    return _InheritedStateContainer(
       data: this,
       child: widget.child,
     );

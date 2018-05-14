@@ -5,25 +5,25 @@ import 'package:trackontraktfltr/screens/login_screen.dart';
 import 'package:trackontraktfltr/screens/welcome_screen.dart';
 import 'package:trackontraktfltr/state_container.dart';
 
-void main() => runApp(new StateContainer(child: new MyApp()));
+void main() => runApp(StateContainer(child: MyApp()));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      theme: new ThemeData(
+      theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: new Color(0xFF1976d2),
-        accentColor: new Color(0xFF008ba3),
-        primaryColorLight: new Color(0xFF63a4ff),
-        primaryColorDark: new Color(0xFF004ba0),
+        primaryColor: Color(0xFF1976d2),
+        accentColor: Color(0xFF008ba3),
+        primaryColorLight: Color(0xFF63a4ff),
+        primaryColorDark: Color(0xFF004ba0),
       ),
-      home: new WelcomeScreen(),
+      home: WelcomeScreen(),
       routes: <String, WidgetBuilder> {
-        '/login': (BuildContext context) => new LoginScreen(),
-        '/history': (BuildContext context) => new HistoryScreen(),
+        '/login': (BuildContext context) => LoginScreen(),
+        '/history': (BuildContext context) => HistoryScreen(),
       },
     );
   }

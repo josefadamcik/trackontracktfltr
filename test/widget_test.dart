@@ -12,7 +12,7 @@ import 'package:trackontraktfltr/main.dart';
 void main() {
   testWidgets('Start app and show welcome screen smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(new MyApp());
+    await tester.pumpWidget(MyApp());
 
     expect(find.text('TrackOnTrakt'), findsOneWidget);
 
