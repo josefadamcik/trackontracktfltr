@@ -9,11 +9,14 @@ dependencies:
   url_launcher: ^3.0.0
   shared_preferences: ^0.4.1
   flutter_webview_plugin: ^0.1.5
+  json_annotation: ^0.2.4
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  json_serializable: ^0.5.2
+  build_runner: ^0.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

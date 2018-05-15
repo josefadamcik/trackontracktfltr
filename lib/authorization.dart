@@ -15,7 +15,10 @@ class Authorization {
   String _identifier;
   String _secret;
   oauth2.Client _client;
-  var _grant;
+  oauth2.AuthorizationCodeGrant _grant;
+
+
+  String get identifier => _identifier;
 
   Future<bool> isAuthorized() async {
     await getOauthClient();
@@ -36,9 +39,7 @@ class Authorization {
   /// one.
   Future<oauth2.Client> getOauthClient() async {
     if (_client == null) {
-      var keys = await _loadKeys();
-      _identifier = keys['clientid'];
-      _secret = keys['clientsecret'];
+      await _ensureKeys();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var credentialsJson = prefs.getString(_oauthCredentialsPreferencesKey);
       if (credentialsJson != null) {
@@ -48,6 +49,12 @@ class Authorization {
       }
     }
     return _client;
+  }
+
+  Future _ensureKeys() async {
+    var keys = await _loadKeys();
+    _identifier = keys['clientid'];
+    _secret = keys['clientsecret'];
   }
 
   Future<oauth2.Client> finishOauth2Authorization(Uri redirected) async {
