@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:trackontraktfltr/Authorization.dart';
+import 'package:trackontraktfltr/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -10,8 +12,17 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool _checkingIfAlreadyLoggedIn = true;
+  Authorization _authorization = Authorization();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthorization();
+  }
+
   _onLoginButtonPressed() async {
-    Navigator.of(context).pushNamed('/login');
+    Navigator.of(context).pushNamed(Routes.login);
   }
 
   _launchTraktWebsite() async {
@@ -53,11 +64,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
-                    child: MaterialButton(
-                        color: theme.accentColor,
-                        textColor: Colors.white,
-                        onPressed: () => _onLoginButtonPressed(),
-                        child: Text("Login via trakt.tv"))))
+                    child:
+                      _checkingIfAlreadyLoggedIn ?
+                      Row(children: <Widget>[CircularProgressIndicator()], mainAxisAlignment: MainAxisAlignment.center,)
+                      : MaterialButton(
+                          color: theme.accentColor,
+                          textColor: Colors.white,
+                          onPressed: () => _onLoginButtonPressed(),
+                          child: Text("Login via trakt.tv"))))
           ])
         ],
       ),
@@ -90,5 +104,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ]),
       ),
     );
+  }
+
+  void _checkAuthorization() async {
+    bool loggedIn = await _authorization.isAuthorized();
+    if (loggedIn) {
+      Navigator.of(context).pushNamedAndRemoveUntil(Routes.history, (Route<dynamic> route) => false);
+    } else {
+      setState(() {
+        _checkingIfAlreadyLoggedIn = false;
+      });
+    }
   }
 }

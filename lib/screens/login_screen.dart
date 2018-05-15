@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:trackontraktfltr/Authorization.dart';
+import 'package:trackontraktfltr/routes.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -14,8 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _webViewPlugin = FlutterWebviewPlugin();
   final Authorization _authorization = Authorization();
   bool _loading = true;
-
-
 
 
   @override
@@ -54,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _loading = false;
       });
+      _continue();
     } else {
       var url = _authorization.getAuthorizationUrl();
       print("Start webview for $url");
@@ -62,17 +62,15 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void _continue() {
+    Navigator.of(context).pushNamedAndRemoveUntil(Routes.history, (Route<dynamic> route) => false);
+  }
+
 
   void _finishOauth(Uri redirected) async {
     print("finish oauth");
     await _authorization.finishOauth2Authorization(redirected);
-    //we are done.
-    setState(() {
-      _loading = false;
-    });
+    _continue();
   }
-
-
-
 }
 

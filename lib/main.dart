@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart' show Color;
+import 'package:trackontraktfltr/routes.dart';
 import 'package:trackontraktfltr/screens/history_screen.dart';
 import 'package:trackontraktfltr/screens/login_screen.dart';
 import 'package:trackontraktfltr/screens/welcome_screen.dart';
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
       ),
       home: WelcomeScreen(),
       routes: <String, WidgetBuilder> {
-        '/login': (BuildContext context) => LoginScreen(),
-        '/history': (BuildContext context) => HistoryScreen(),
+        Routes.login: (BuildContext context) => LoginScreen(),
+        Routes.history: (BuildContext context) => HistoryScreen(),
       },
     );
   }

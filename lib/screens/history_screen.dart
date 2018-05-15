@@ -12,7 +12,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("TrackOnTrakt"),),
+      appBar: AppBar(title: Text("TrackOnTrakt history"),),
       body: ListView(),
     );
   }

@@ -25,6 +25,11 @@ class StateContainer extends StatefulWidget {
   StateContainerState createState() => StateContainerState();
 }
 class StateContainerState extends State<StateContainer> {
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
 
   // Simple build method that just passes this state through
