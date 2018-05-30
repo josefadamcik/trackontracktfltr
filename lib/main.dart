@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart' show Color;
 import 'package:trackontraktfltr/routes.dart';
+import 'package:trackontraktfltr/screens/detail_screen.dart';
 import 'package:trackontraktfltr/screens/history_screen.dart';
 import 'package:trackontraktfltr/screens/login_screen.dart';
 import 'package:trackontraktfltr/screens/welcome_screen.dart';
@@ -25,6 +26,15 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder> {
         Routes.login: (BuildContext context) => LoginScreen(),
         Routes.history: (BuildContext context) => HistoryScreen(),
+      },
+      onGenerateRoute: (RouteSettings routeSettings) {
+        if (routeSettings.name.startsWith(Routes.detailRoot)) {
+          String idStr = routeSettings.name.replaceFirst(Routes.detailRoot, "");
+          int id = int.parse(idStr);
+          return MaterialPageRoute<void>(builder: (BuildContext context) {
+            return DetailScreen(id);
+          });
+        }
       },
     );
   }
