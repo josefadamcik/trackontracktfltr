@@ -14,6 +14,7 @@ class HistoryItem extends MediaItem with _$HistoryItemSerializerMixin {
 
   HistoryItem({this.id, this.watchedAt, this.action});
 
+
   factory HistoryItem.fromJson(Map<String, dynamic> json) => _$HistoryItemFromJson(json);
 
 

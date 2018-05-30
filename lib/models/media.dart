@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'media.g.dart';
 
 enum MediaType { movie, episode, show }
+
+
 
 @JsonSerializable()
 class Movie extends Object with _$MovieSerializerMixin {
@@ -52,6 +55,40 @@ abstract class MediaItem {
         return movie?.title;
     }
     return null;
+  }
+
+  String get subtitle => type == MediaType.episode ? "S ${episode?.season}, Ep ${episode?.number} - ${episode.title}" : "";
+
+  int get year {
+    switch (type) {
+      case MediaType.episode:
+      case MediaType.show:
+        return show?.year;
+      case MediaType.movie:
+        return movie?.year;
+    }
+    return null;
+  }
+
+  String get typeInfo {
+    switch (type) {
+      case MediaType.episode:
+        return "episode";
+      case MediaType.show:
+        return "show";
+      case MediaType.movie:
+        return "year";
+    }
+    return null;
+  }
+
+  IconData get icon {
+    if (type == MediaType.episode || type == MediaType.show) {
+      return Icons.tv;
+    } else if (type == MediaType.movie) {
+      return Icons.movie;
+    }
+    return  Icons.not_interested;
   }
 }
 
