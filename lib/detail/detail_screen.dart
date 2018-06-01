@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trackontraktfltr/authorization.dart';
+import 'package:trackontraktfltr/login/authorization.dart';
 import 'package:trackontraktfltr/trakt_api.dart';
 
 class DetailScreen extends StatefulWidget {

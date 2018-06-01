@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:trackontraktfltr/routes.dart';
-import 'package:trackontraktfltr/screens/detail_screen.dart';
-import 'package:trackontraktfltr/screens/history_screen.dart';
-import 'package:trackontraktfltr/screens/login_screen.dart';
-import 'package:trackontraktfltr/screens/welcome_screen.dart';
+import 'package:trackontraktfltr/detail/detail_screen.dart';
+import 'package:trackontraktfltr/history/history_screen.dart';
+import 'package:trackontraktfltr/login/login_screen.dart';
+import 'package:trackontraktfltr/resources/routes.dart';
+import 'package:trackontraktfltr/resources/strings.dart';
+import 'package:trackontraktfltr/resources/style.dart';
 import 'package:trackontraktfltr/state_container.dart';
-import 'package:trackontraktfltr/strings.dart';
-import 'package:trackontraktfltr/style.dart';
+import 'package:trackontraktfltr/welcome/welcome_screen.dart';
 
 void main() => runApp(StateContainer(child: MyApp()));
 

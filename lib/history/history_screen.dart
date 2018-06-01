@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trackontraktfltr/authorization.dart';
-import 'package:trackontraktfltr/models/history_item.dart';
-import 'package:trackontraktfltr/routes.dart';
-import 'package:trackontraktfltr/strings.dart';
+import 'package:trackontraktfltr/history/history_item.dart';
+import 'package:trackontraktfltr/login/authorization.dart';
+import 'package:trackontraktfltr/resources/routes.dart';
+import 'package:trackontraktfltr/resources/strings.dart';
 import 'package:trackontraktfltr/trakt_api.dart';
 
 class HistoryScreen extends StatefulWidget {

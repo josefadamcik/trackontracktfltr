@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:trackontraktfltr/authorization.dart';
-import 'package:trackontraktfltr/routes.dart';
-import 'package:trackontraktfltr/strings.dart';
+import 'package:trackontraktfltr/login/authorization.dart';
+import 'package:trackontraktfltr/resources/routes.dart';
+import 'package:trackontraktfltr/resources/strings.dart';
 
 
 class LoginScreen extends StatefulWidget {

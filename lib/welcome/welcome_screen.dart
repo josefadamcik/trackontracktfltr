@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:trackontraktfltr/authorization.dart';
-import 'package:trackontraktfltr/routes.dart';
-import 'package:trackontraktfltr/strings.dart';
-import 'package:trackontraktfltr/style.dart';
+import 'package:trackontraktfltr/login/authorization.dart';
+import 'package:trackontraktfltr/resources/routes.dart';
+import 'package:trackontraktfltr/resources/strings.dart';
+import 'package:trackontraktfltr/resources/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeScreen extends StatefulWidget {

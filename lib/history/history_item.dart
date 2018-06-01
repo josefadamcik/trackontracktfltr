@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:trackontraktfltr/models/media.dart';
 
-part 'history_item.g.dart';
+part 'package:trackontraktfltr/history/history_item.g.dart';
 
 enum HistoryAction { scrobble, checkin, watch }
 

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:trackontraktfltr/models/history_item.dart';
+import 'package:trackontraktfltr/history/history_item.dart';
 
 
 class TraktApi {
