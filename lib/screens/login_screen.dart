@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:trackontraktfltr/authorization.dart';
 import 'package:trackontraktfltr/routes.dart';
+import 'package:trackontraktfltr/strings.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -38,17 +39,17 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login on Trakt.tv"),
+        title: Text(Strings.loginTitle),
       ),
       body: Center(
-          child: _loading ? CircularProgressIndicator() : Text("Logged in")),
+          child: _loading ? CircularProgressIndicator() : Text(Strings.loginConfirmMsg)),
     );
   }
 
 
   void _initOauth() async {
     if (await _authorization.isAuthorized()) {
-      print("Alerady authorized");
+      print("Already authorized");
       //we already have login!
       setState(() {
         _loading = false;

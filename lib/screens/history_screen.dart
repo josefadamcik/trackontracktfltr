@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:trackontraktfltr/authorization.dart';
 import 'package:trackontraktfltr/models/history_item.dart';
 import 'package:trackontraktfltr/routes.dart';
+import 'package:trackontraktfltr/strings.dart';
 import 'package:trackontraktfltr/trakt_api.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("TrackOnTrakt history"),
+          title: Text(Strings.historyTitle),
         ),
         body: FutureBuilder<List<HistoryItem>>(
           future: _loadData(),
@@ -63,7 +64,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             child: Icon(item.icon)),
                         Flexible(
                             child: Text(
-                          item.title ?? "title n/a",
+                          item.title ?? Strings.titleNa,
                           style: theme.textTheme.title,
                           overflow: TextOverflow.ellipsis,
                         ))
