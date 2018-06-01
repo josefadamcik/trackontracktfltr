@@ -112,6 +112,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void _onItemTap(int index, HistoryItem item) {
-    Navigator.of(context).pushNamed(Routes.detail(item.id));
+    Navigator.of(context).push(Routes.detail(item));
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trackontraktfltr/detail/detail_screen.dart';
 import 'package:trackontraktfltr/history/history_screen.dart';
 import 'package:trackontraktfltr/login/login_screen.dart';
 import 'package:trackontraktfltr/resources/routes.dart';
@@ -26,15 +25,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder> {
         Routes.login: (BuildContext context) => LoginScreen(),
         Routes.history: (BuildContext context) => HistoryScreen(),
-      },
-      onGenerateRoute: (RouteSettings routeSettings) {
-        if (routeSettings.name.startsWith(Routes.detailRoot)) {
-          String idStr = routeSettings.name.replaceFirst(Routes.detailRoot, "");
-          int id = int.parse(idStr);
-          return MaterialPageRoute<void>(builder: (BuildContext context) {
-            return DetailScreen(id);
-          });
-        }
+        //for more navigation options check Routes class
       },
     );
   }
