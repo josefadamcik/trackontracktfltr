@@ -5,12 +5,13 @@
 // are correct.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:trackontraktfltr/login/authorization.dart';
 import 'package:trackontraktfltr/main.dart';
 
 void main() {
   testWidgets('Start app and show welcome screen smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(MyApp(authorization: Authorization(),));
 
     expect(find.text('TrackOnTrakt'), findsOneWidget);
 

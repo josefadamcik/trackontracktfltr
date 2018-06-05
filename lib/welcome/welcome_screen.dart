@@ -7,15 +7,18 @@ import 'package:trackontraktfltr/resources/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  WelcomeScreen({Key key}) : super(key: key);
+  final Authorization _authorization;
+  WelcomeScreen(this._authorization, {Key key}) : super(key: key);
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _WelcomeScreenState createState() => _WelcomeScreenState(_authorization);
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   bool _checkingIfAlreadyLoggedIn = true;
-  Authorization _authorization = Authorization();
+  final Authorization _authorization;
+
+  _WelcomeScreenState(this._authorization);
 
   @override
   void initState() {
@@ -23,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _checkAuthorization();
   }
 
-  _onLoginButtonPressed() async {
+  void _onLoginButtonPressed() {
     Navigator.of(context).pushNamed(Routes.login);
   }
 
