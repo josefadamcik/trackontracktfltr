@@ -6,6 +6,7 @@ import 'package:trackontraktfltr/history/history_item.dart';
 import 'package:trackontraktfltr/login/authorization.dart';
 import 'package:trackontraktfltr/resources/routes.dart';
 import 'package:trackontraktfltr/resources/strings.dart';
+import 'package:trackontraktfltr/resources/style.dart';
 import 'package:trackontraktfltr/trakt_api.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -18,19 +19,38 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final _traktApi = TraktApi();
   final _authorization = Authorization();
-  DateFormat _watchedAtFormat = new DateFormat.yMd().add_Hm();
 
   @override
   Widget build(BuildContext context) {
+    final screenTitleTheme = Theme.of(context).textTheme.title.copyWith(fontFamily: AppStyle.fontRobotoSlab, color: Colors.white);
     return Scaffold(
         appBar: AppBar(
-          title: Text(Strings.historyTitle),
+          title: Text(
+            Strings.appName,
+            style: screenTitleTheme,
+          ),
+          actions: <Widget>[
+            Builder(
+              // Builder must be used so  Scaffold.of(context) can find a scaffold for Snackbar
+              builder: (BuildContext context) {
+                return IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      print("search tap");
+                      final snack = SnackBar(
+                        content: Text("Search tap"),
+                      );
+                      Scaffold.of(context).showSnackBar(snack);
+                    });
+              },
+            )
+          ],
         ),
         body: FutureBuilder<List<HistoryItem>>(
           future: _loadData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return _buildListView(snapshot);
+              return _HistoryList(snapshot.data);
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return Center(child: Text("${snapshot.error}"));
@@ -42,17 +62,31 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ));
   }
 
-  ListView _buildListView(AsyncSnapshot<List<HistoryItem>> snapshot) {
+  Future<List<HistoryItem>> _loadData() async {
+    final oauthClient = await _authorization.getOauthClient();
+    return _traktApi.myHistory(
+        oauthClient.credentials.accessToken, _authorization.identifier);
+  }
+}
+
+class _HistoryList extends StatelessWidget {
+  final List<HistoryItem> _items;
+  final DateFormat _watchedAtFormat = new DateFormat.yMd().add_Hm();
+
+  _HistoryList(this._items, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
     return ListView.builder(
-        itemCount: snapshot.data.length,
+        itemCount: _items.length,
         padding: EdgeInsets.all(8.0),
         itemBuilder: (context, index) {
-          var item = snapshot?.data[index];
+          var item = _items[index];
           return InkWell(
               onTap: () {
-                _onItemTap(index, item);
+                _onItemTap(context, index, item);
               },
               child: Ink(
                   padding: EdgeInsets.all(8.0),
@@ -61,7 +95,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       children: <Widget>[
                         Padding(
                             padding: EdgeInsets.only(right: 8.0),
-                            child: Icon(item.icon)),
+                            child:
+                                Icon(item.icon, color: AppStyle.accentColor)),
                         Flexible(
                             child: Text(
                           item.title ?? Strings.titleNa,
@@ -77,7 +112,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             Flexible(
                               child: Text(
                                 item.subtitle ?? "",
-                                style: theme.textTheme.subhead,
+                                style: theme.textTheme.subhead.copyWith(color: AppStyle.textColorSecondary),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             )
@@ -101,17 +136,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
         });
   }
 
-  Future<List<HistoryItem>> _loadData() async {
-    final oauthClient = await _authorization.getOauthClient();
-    return _traktApi.myHistory(
-        oauthClient.credentials.accessToken, _authorization.identifier);
+  void _onItemTap(BuildContext context, int index, HistoryItem item) {
+    Navigator.of(context).push(Routes.detail(item));
   }
 
   String _typeInfoForItem(HistoryItem item) {
     return "${item.typeInfo} (${item.year})";
-  }
-
-  void _onItemTap(int index, HistoryItem item) {
-    Navigator.of(context).push(Routes.detail(item));
   }
 }
