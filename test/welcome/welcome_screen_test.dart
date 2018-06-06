@@ -3,37 +3,43 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:trackontraktfltr/app_navigator.dart';
 import 'package:trackontraktfltr/login/authorization.dart';
+import 'package:trackontraktfltr/resources/routes.dart';
 import 'package:trackontraktfltr/resources/strings.dart';
 import 'package:trackontraktfltr/welcome/welcome_screen.dart';
 
 class MockAuthorization extends Mock implements Authorization {}
 
+class MockAppNavigator extends Mock implements AppNavigator {}
+
 void main() {
   final authorization = MockAuthorization();
+  final appNavigator = MockAppNavigator();
 
   setUp(() {
     reset(authorization);
+    reset(appNavigator);
   });
 
   testWidgets('Authorized welcome screen has loader',
       (WidgetTester tester) async {
     when(authorization.isAuthorized()).thenReturn(Future<bool>.value(true));
 
-    await tester.pumpWidget(provideAppWithWelcomeScreen(authorization));
+    await tester
+        .pumpWidget(provideAppWithWelcomeScreen(authorization, appNavigator));
 
     expectTrackOnTraktTitle();
     expectWelcomeMessage();
     expectProgressIndicator();
 
-    await tester.pumpAndSettle();
-    //fixme: assert navigation, somehow
+    verify(appNavigator.showHistory());
   });
 
   testWidgets('Unauthorized welecome screen has a button.',
       (WidgetTester tester) async {
     when(authorization.isAuthorized()).thenReturn(Future<bool>.value(false));
-    final app = provideAppWithWelcomeScreen(authorization);
+    final app = provideAppWithWelcomeScreen(authorization, appNavigator);
     await tester.pumpWidget(app);
 
     expectTrackOnTraktTitle();
@@ -44,7 +50,9 @@ void main() {
     expect(find.byType(RaisedButton), findsOneWidget);
 
     await tester.tap(find.byType(RaisedButton));
-    //fixme: assert navigation, somehow
+    await tester.pumpAndSettle();
+
+    verify(appNavigator.showNamed(Routes.login));
   });
 }
 
@@ -55,9 +63,11 @@ class EmptyWidget extends StatelessWidget {
   }
 }
 
-MaterialApp provideAppWithWelcomeScreen(MockAuthorization authorization) {
+MaterialApp provideAppWithWelcomeScreen(
+    MockAuthorization authorization, MockAppNavigator mockAppNavigator) {
   return MaterialApp(
-    home: WelcomeScreen(authorization),
+    home:
+        WelcomeScreen(authorization, TestAppNavigatorFactory(mockAppNavigator)),
     routes: <String, WidgetBuilder>{
       '/history': (BuildContext context) => EmptyWidget(),
       '/login': (BuildContext context) => EmptyWidget()

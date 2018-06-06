@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:trackontraktfltr/app_navigator.dart';
 import 'package:trackontraktfltr/login/authorization.dart';
 import 'package:trackontraktfltr/resources/routes.dart';
 import 'package:trackontraktfltr/resources/strings.dart';
@@ -8,17 +9,21 @@ import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final Authorization _authorization;
-  WelcomeScreen(this._authorization, {Key key}) : super(key: key);
+  final AppNavigatorFactory _navigatorFactory;
+  WelcomeScreen(this._authorization, this._navigatorFactory, {Key key})
+      : super(key: key);
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState(_authorization);
+  _WelcomeScreenState createState() =>
+      _WelcomeScreenState(_authorization, _navigatorFactory);
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   bool _checkingIfAlreadyLoggedIn = true;
   final Authorization _authorization;
+  final AppNavigatorFactory _navigatorFactory;
 
-  _WelcomeScreenState(this._authorization);
+  _WelcomeScreenState(this._authorization, this._navigatorFactory);
 
   @override
   void initState() {
@@ -27,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void _onLoginButtonPressed() {
-    Navigator.of(context).pushNamed(Routes.login);
+    _navigatorFactory.get(context).showNamed(Routes.login);
   }
 
   _launchTraktWebsite() async {
@@ -123,8 +128,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void _checkAuthorization() async {
     bool loggedIn = await _authorization.isAuthorized();
     if (loggedIn) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.history, (Route<dynamic> route) => false);
+      _navigatorFactory.get(context).showHistory();
     } else {
       setState(() {
         _checkingIfAlreadyLoggedIn = false;
