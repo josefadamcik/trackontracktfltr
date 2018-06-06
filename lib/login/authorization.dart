@@ -17,12 +17,20 @@ class Authorization {
   oauth2.Client _client;
   oauth2.AuthorizationCodeGrant _grant;
 
-
   String get identifier => _identifier;
 
   Future<bool> isAuthorized() async {
-    await getOauthClient();
+    await _getOauthClient();
     return _client != null;
+  }
+
+  Future<String> getAccessToken() async {
+    if (await isAuthorized()) {
+      final client = await _getOauthClient();
+      return client.credentials.accessToken;
+    } else {
+      return null;
+    }
   }
 
   bool isRedirectUrl(String url) {
@@ -37,7 +45,7 @@ class Authorization {
 
   /// Either load an OAuth2 client from saved credentials or authenticate a new
   /// one.
-  Future<oauth2.Client> getOauthClient() async {
+  Future<oauth2.Client> _getOauthClient() async {
     if (_client == null) {
       await _ensureKeys();
       SharedPreferences prefs = await SharedPreferences.getInstance();

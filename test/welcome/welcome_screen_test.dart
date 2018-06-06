@@ -1,17 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:trackontraktfltr/app_navigator.dart';
-import 'package:trackontraktfltr/login/authorization.dart';
 import 'package:trackontraktfltr/resources/routes.dart';
 import 'package:trackontraktfltr/resources/strings.dart';
 import 'package:trackontraktfltr/welcome/welcome_screen.dart';
 
-class MockAuthorization extends Mock implements Authorization {}
-
-class MockAppNavigator extends Mock implements AppNavigator {}
+import '../mock.dart';
 
 void main() {
   final authorization = MockAuthorization();
@@ -24,10 +19,10 @@ void main() {
 
   testWidgets('Authorized welcome screen has loader',
       (WidgetTester tester) async {
-    when(authorization.isAuthorized()).thenReturn(Future<bool>.value(true));
+    withUnauthorized(authorization: authorization);
 
     await tester
-        .pumpWidget(provideAppWithWelcomeScreen(authorization, appNavigator));
+        .pumpWidget(withAppWithWelcomeScreen(authorization, appNavigator));
 
     expectTrackOnTraktTitle();
     expectWelcomeMessage();
@@ -38,8 +33,9 @@ void main() {
 
   testWidgets('Unauthorized welecome screen has a button.',
       (WidgetTester tester) async {
-    when(authorization.isAuthorized()).thenReturn(Future<bool>.value(false));
-    final app = provideAppWithWelcomeScreen(authorization, appNavigator);
+    withAuthorized(authorization: authorization);
+
+    final app = withAppWithWelcomeScreen(authorization, appNavigator);
     await tester.pumpWidget(app);
 
     expectTrackOnTraktTitle();
@@ -63,15 +59,11 @@ class EmptyWidget extends StatelessWidget {
   }
 }
 
-MaterialApp provideAppWithWelcomeScreen(
+MaterialApp withAppWithWelcomeScreen(
     MockAuthorization authorization, MockAppNavigator mockAppNavigator) {
   return MaterialApp(
     home:
         WelcomeScreen(authorization, TestAppNavigatorFactory(mockAppNavigator)),
-    routes: <String, WidgetBuilder>{
-      '/history': (BuildContext context) => EmptyWidget(),
-      '/login': (BuildContext context) => EmptyWidget()
-    },
   );
 }
 

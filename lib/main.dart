@@ -8,19 +8,23 @@ import 'package:trackontraktfltr/resources/routes.dart';
 import 'package:trackontraktfltr/resources/strings.dart';
 import 'package:trackontraktfltr/resources/style.dart';
 import 'package:trackontraktfltr/state_container.dart';
+import 'package:trackontraktfltr/trakt_api.dart';
 import 'package:trackontraktfltr/welcome/welcome_screen.dart';
 
 void main() => runApp(StateContainer(
         child: MyApp(
       authorization: Authorization(),
+      traktApi: TraktApi(),
     )));
 
 class MyApp extends StatelessWidget {
   final Authorization authorization;
+  final TraktApi traktApi;
 
   const MyApp({
     Key key,
     @required this.authorization,
+    @required this.traktApi,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,8 @@ class MyApp extends StatelessWidget {
       home: WelcomeScreen(authorization, AppNavigatorFactory()),
       routes: <String, WidgetBuilder>{
         Routes.login: (BuildContext context) => LoginScreen(),
-        Routes.history: (BuildContext context) => HistoryScreen(),
+        Routes.history: (BuildContext context) =>
+            HistoryScreen(traktApi, authorization),
         //for more navigation options check Routes class
       },
     );

@@ -3,26 +3,34 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:trackontraktfltr/history/history_item.dart';
-import 'package:trackontraktfltr/login/authorization.dart';
 import 'package:trackontraktfltr/resources/routes.dart';
 import 'package:trackontraktfltr/resources/strings.dart';
 import 'package:trackontraktfltr/resources/style.dart';
-import 'package:trackontraktfltr/trakt_api.dart';
 
 class HistoryScreen extends StatefulWidget {
-  HistoryScreen({Key key}) : super(key: key);
+  final _traktApi;
+  final _authorization;
+  HistoryScreen(this._traktApi, this._authorization, {Key key})
+      : super(key: key);
 
   @override
-  _HistoryScreenState createState() => _HistoryScreenState();
+  _HistoryScreenState createState() =>
+      _HistoryScreenState(_traktApi, _authorization);
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  final _traktApi = TraktApi();
-  final _authorization = Authorization();
+  final _traktApi;
+  final _authorization;
+
+  _HistoryScreenState(this._traktApi, this._authorization);
 
   @override
   Widget build(BuildContext context) {
-    final screenTitleTheme = Theme.of(context).textTheme.title.copyWith(fontFamily: AppStyle.fontRobotoSlab, color: Colors.white);
+    final screenTitleTheme = Theme
+        .of(context)
+        .textTheme
+        .title
+        .copyWith(fontFamily: AppStyle.fontRobotoSlab, color: Colors.white);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -63,9 +71,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Future<List<HistoryItem>> _loadData() async {
-    final oauthClient = await _authorization.getOauthClient();
     return _traktApi.myHistory(
-        oauthClient.credentials.accessToken, _authorization.identifier);
+        await _authorization.getAccessToken(), _authorization.identifier);
   }
 }
 
@@ -112,7 +119,8 @@ class _HistoryList extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 item.subtitle ?? "",
-                                style: theme.textTheme.subhead.copyWith(color: AppStyle.textColorSecondary),
+                                style: theme.textTheme.subhead.copyWith(
+                                    color: AppStyle.textColorSecondary),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             )
