@@ -11,3 +11,6 @@ build/
 *.iml
 keys.properties
 assets/trakt_keys.json
+*.log
+*.g.dart
+coverage/
